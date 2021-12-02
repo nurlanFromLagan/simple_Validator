@@ -5,11 +5,11 @@
 Простой валидатор, состоящий из двух компонентов - из валидации входящих данных, имени пользователя и email, а так же вывода флэш сообщений. С их помощью вы сможете проверить заполненны ли ваши поля и вывести сообщения об ошибке.
 
 
-### 1. Создаем экземпляр класса и передаем значения в конструктор
+### 1. Создаем экземпляр класса
 
 ```
 
-$validation = new Validation ($username, $email);
+$validation = new Validation ();
 
 ```
 
@@ -17,13 +17,29 @@ $validation = new Validation ($username, $email);
 ### 2. Пример использования фунций
 
 ```
-//производим проверку имени пользователя и email, а после выводим флэш сообщения
-if ($validation->validationUsername() === 1) {
-    FlashMessage::set_flash_message('validation_message1', 'Введитwwе username');
-} elseif ($validation->validationUsername() === 2) {
-    FlashMessage::set_flash_message('validation_message1', 'Имя пользователя должно быть не менее 3-х сммволов и не более 25');
-} elseif ($validation->validationEmail() === false) {
-    FlashMessage::set_flash_message('validation_message2', 'Ввеdddдите email');
+//Сначала проверяем заполненно ли поле 'имя пользователя', потом проверяем корректность длины 'имени пользователя'
+//функции required и checkFieldLength могут использоваться для проверки любых полей
+
+if (!$validation->required($username)) {
+    FlashMessage::set_flash_message('validation_message1', 'Введитe имя пользователя!');
+} elseif (!$validation->checkFieldLength($username, 4, 15)) {
+    FlashMessage::set_flash_message('validation_message1', 'Имя пользователя должно быть от 4 до 15 символов!');
+}
+
+if (!$validation->validateEmail($email)) {
+    FlashMessage::set_flash_message('validation_message2', 'Введитe корректный email!');
+}
+
+```
+
+
+### 3. Пример использования фунции для проверки email
+
+```
+//Поле email проверяем отдельной функцией, где используем фильтр для проверки 
+
+if (!$validation->validateEmail($email)) {
+    FlashMessage::set_flash_message('validation_message2', 'Введитe корректный email!');
 }
 
 ```
