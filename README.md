@@ -21,8 +21,10 @@ $validation = new Validation ();
 
 if (!$validation->required($username)) {
     FlashMessage::set_flash_message('validation_message1', 'Введитe имя пользователя!');
+    
 } elseif (!$validation->checkFieldLength($username, 4, 15)) {
     FlashMessage::set_flash_message('validation_message1', 'Имя пользователя должно быть от 4 до 15 символов!');
+    
 }
 
 ```
@@ -35,6 +37,7 @@ if (!$validation->required($username)) {
 
 if (!$validation->validateEmail($email)) {
     FlashMessage::set_flash_message('validation_message2', 'Введитe корректный email!');
+    
 }
 
 ```
