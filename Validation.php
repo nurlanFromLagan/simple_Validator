@@ -3,39 +3,40 @@
 
 class Validation
 {
-    private $username;
-    private $email;
-
 
     /*
-     * Конструктор принимает на вход два значения - имя пользователя и email
+     * ф-я делает проверку поля на пустоту, в основном применяется для обязательных к заполнению полей
      * */
-    public function __construct($username, $email)
-    {
-        $this->username = $username;
-        $this->email = $email;
-    }
-
-
-    /*
-     * ф-я делает проверку имени пользователя, сначала проверяет на пустоту, а после на количество символов
-     * */
-    public function validationUsername () {
-        if (empty($this->username)) {
-            return 1;
-        } elseif (strlen($this->username) < 3 || strlen($this->username) > 25) {
-            return 2;
-        }
-    }
-
-
-    /*
-     * фунуция делает проверку email на пустоту
-     * */
-    public function validationEmail () {
-        if (empty($this->email)) {
+    public function required ($field) {
+        if (empty($field)) {
             return false;
         }
         return true;
     }
+
+
+    /*
+     * ф-я делает проверку на количество заданных символов в поле, где $min - минимальное количество символов и $max - максимальное
+     * */
+    public function checkFieldLength ($field, int $min, int $max) {
+
+        if (strlen($field) < $min || strlen($field) > $max) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    /*
+     * ф-я делает проверку email по фильтру, проверяет на корректность введенный email
+     * */
+    function validateEmail ($email) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
