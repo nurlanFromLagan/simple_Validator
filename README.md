@@ -8,7 +8,6 @@
 ### 1. Создаем экземпляр класса
 
 ```
-
 $validation = new Validation ();
 
 ```
@@ -17,17 +16,13 @@ $validation = new Validation ();
 ### 2. Пример использования фунций
 
 ```
-//Сначала проверяем заполненно ли поле 'имя пользователя', потом проверяем корректность длины 'имени пользователя'
+//Сначала проверяем заполненно ли поле 'имя пользователя', потом проверяем корректность длины 'имени пользователя', где сами задаем нужную нам длину
 //функции required и checkFieldLength могут использоваться для проверки любых полей
 
 if (!$validation->required($username)) {
     FlashMessage::set_flash_message('validation_message1', 'Введитe имя пользователя!');
 } elseif (!$validation->checkFieldLength($username, 4, 15)) {
     FlashMessage::set_flash_message('validation_message1', 'Имя пользователя должно быть от 4 до 15 символов!');
-}
-
-if (!$validation->validateEmail($email)) {
-    FlashMessage::set_flash_message('validation_message2', 'Введитe корректный email!');
 }
 
 ```
